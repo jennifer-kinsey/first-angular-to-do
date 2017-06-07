@@ -9,21 +9,7 @@ import { Task } from './task.model';
       <h3>{{currentFocus}}</h3>
       <task-list [childTaskList]="masterTaskList" (clickSender)="editTask($event)"></task-list>
       <hr>
-      <div>
-        <div *ngIf="selectedTask">
-          <h3>{{selectedTask.description}}</h3>
-          <p>Task Complete? {{selectedTask.done}}</p>
-          <hr>
-          <h3>Edit Task</h3>
-          <label>Enter Task Description:</label>
-          <input [(ngModel)]="selectedTask.description">
-          <label>Enter Task Priority (1-3):</label><br>
-          <input type="radio" [(ngModel)]="selectedTask.priority" [value]="1">1 (Low Priority)<br>
-          <input type="radio" [(ngModel)]="selectedTask.priority" [value]="2">2 (Medium Priority)<br>
-          <input type="radio" [(ngModel)]="selectedTask.priority" [value]="3">3 (High Priority)
-          <button (click)="finishedEditing()">Done</button>
-        </div>
-      </div>
+      <edit-task [childSelectedTask]="selectedTask" (doneButtonClickedSender)="finishedEditing()"></edit-task>
     </div>
   `
 })
@@ -34,7 +20,6 @@ export class AppComponent {
   month: number = this.currentTime.getMonth() + 1;
   day: number = this.currentTime.getDate();
   year: number = this.currentTime.getFullYear();
-  hour: number = this.currentTime.getHours();
   selectedTask = null;
 
   masterTaskList: Task[] = [
